@@ -1,54 +1,51 @@
 package com.example.pages;
 
 import com.example.base.BasePage;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
 
-    public static final By EMAIL_AREA = By.id("L-UserNameField");
-    public static final By PASSWORD_AREA = By.id("L-PasswordField");
-    public static final By LOGIN_BUTTON = By.id("gg-login-enter");
-
+    static final By EMAIL_AREA = By.id("L-UserNameField");
+    static final By PASSWORD_AREA = By.id("L-PasswordField");
+    static final By LOGIN_BUTTON = By.id("gg-login-enter");
 
     public LoginPage(WebDriver driver)
     {
         super(driver);
     }
-    public LoginPage clickEmailField(){
+
+    public LoginPage ClickEmailField(){
         click(EMAIL_AREA);
         return this;
     }
-//mertekinci1995@gmail.com
-    public LoginPage sendEmail(){
-        sendKeys(EMAIL_AREA, "mertekinci1995@gmail.com");
+
+    public LoginPage SendEmail(){
+        sendKeys(EMAIL_AREA, "alex_mert_fb@hotmail.com");
         return this;
     }
 
-    public LoginPage clickPasswordField(){
+    public LoginPage ClickPasswordField(){
         click(PASSWORD_AREA);
         return this;
     }
 
-    public  LoginPage sendPassword(){
+    public  LoginPage SendPassword(){
         sendKeys(PASSWORD_AREA, "Mert.2020");
         return this;
     }
 
-    public LoginPage clickLogIn(){
+    public LoginPage ClickLogIn(){
         click(LOGIN_BUTTON);
         return this;
     }
 
-    /*
-    public LoginPage search(){
-        sendKeys(SEARCH_AREA, "Bilgisayar");
+    public LoginPage CheckIfLoggedIn(){
+        // There is no assert here because it will fail if xpath is not found.
+        // Since we check value = 2 by xpath it is already "kind of" an assert.
+        By.cssSelector("[title^='Hesabım']");
         return this;
     }
-    public LoginPage searchButton(){
-        click(SEARCH_BUTTON);
-        return this;
-    }
-*/
 
 }

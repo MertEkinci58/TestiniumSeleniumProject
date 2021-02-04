@@ -9,10 +9,8 @@ public class BaseTest {
 
     static WebDriver webDriver = null;
 
-
     @Before
     public void setUp(){
-
         System.setProperty("webdriver.chrome.driver","C:\\Users\\Casper\\Desktop\\Test\\Testinium\\drivers\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         /*options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");*/

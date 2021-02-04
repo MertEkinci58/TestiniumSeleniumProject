@@ -1,72 +1,87 @@
 package com.example.pages;
 
 import com.example.base.BasePage;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-
-import java.util.List;
 import java.util.Random;
 
 public class ProductPage extends BasePage {
 
-    public static final By SEARCH_AREA = By.name("k");
-    public static final By FIND_PRODUCT = By.xpath("//*[@id=\"main-header\"]/div[3]/div/div/div/div[2]/form/div/div[2]/button");
-    public static final By POLICY_ALERT_CLOSE = By.xpath("//a[@class='policy-alert-close btn-alert-close']");
-    public static final By SECOND_PAGE = By.xpath("//a[text()='2']");
+    static final By SEARCH_AREA = By.name("k");
+    static final By FIND_PRODUCT = By.xpath("//*[@id=\"main-header\"]/div[3]/div/div/div/div[2]/form/div/div[2]/button");
+    static final By POLICY_ALERT_CLOSE = By.xpath("//a[@class='policy-alert-close btn-alert-close']");
+    static final By SECOND_PAGE = By.xpath("//a[text()='2']");
+    static final By SECOND_PAGE_CONTROLLER = By.xpath(".//div[contains(@class,'pager')]//li[contains(@class,'selected')]/a");
+    static final By LOW_PRICE = By.id("sp-price-lowPrice");
+    static final By HIGH_PRICE = By.id("sp-price-highPrice");
+
+    String productPrice;
+    String productDetailLowPrice;
+    String productDetailHighPrice;
 
     public ProductPage(WebDriver driver){
         super(driver);
     }
 
-    public ProductPage clickSearchField(){
+    public ProductPage ClickSearchField(){
         click(SEARCH_AREA);
         return this;
     }
 
-    public ProductPage fillSearchField(){
+    public ProductPage FillSearchField(){
         sendKeys(SEARCH_AREA,"bilgisayar");
         return this;
     }
 
-    public ProductPage clickFindProduct(){
+    public ProductPage ClickFindProduct(){
         click(FIND_PRODUCT);
         return this;
     }
 
-    public ProductPage closePolicyAlert(){
+    public ProductPage ClosePolicyAlert(){
         click(POLICY_ALERT_CLOSE);
-        System.out.println("Closed Policy");
         return this;
     }
 
-    public ProductPage clickSecondPage(){
+    public ProductPage ClickSecondPage(){
         click(SECOND_PAGE);
-        System.out.println("You are second Page");
         return this;
     }
 
-    public ProductPage clickRandomProduct(){
+    public ProductPage CheckPageOpened() {
+        String currentPageNumber= getText(SECOND_PAGE_CONTROLLER);
+        Assert.assertEquals("You Are Not At Second Page","2",currentPageNumber);
+        return this;
+    }
+
+    public ProductPage ClickRandomProduct(){
         Random rnd = new Random();
         int index = rnd.nextInt(20)+1;
-        String productPrice = driver.findElement(By.xpath(".//li[contains(@class,'srp-item-list')]["+index+"]//p[contains(@class,'fiyat')]")).getText();
-        System.out.println(productPrice);
-        click(By.xpath(".//li[contains(@class,'srp-item-list')]["+index+"]"));
-        System.out.println("Product Price: "+productPrice);
+
+        By price = By.xpath(".//li[contains(@class,'srp-item-list')]["+index+"]//p[contains(@class,'fiyat')]");
+
+        productPrice = getText(price);
+
+        click(price);
+
         return this;
     }
 
-    public ProductPage selectProductDetailPrice(){
-        String productDetailPrice = driver.findElement(By.id("sp-price-lowPrice")).getText();
-        System.out.println("Product Detail Price: "+productDetailPrice);
+    public ProductPage SelectProductDetailPrice(){
+        productDetailLowPrice = getText(LOW_PRICE);
+        productDetailHighPrice = getText(HIGH_PRICE);
+
         return this;
     }
+    
+    public ProductPage ProductPriceCompare(){
+        if(productDetailLowPrice.equals("")){
+            Assert.assertEquals("Prices Not Equal",productPrice,productDetailHighPrice);
+            return this;
+        }
 
-    public ProductPage productPriceCompare(){
-        System.out.println("Products Prices Compared");
+        Assert.assertEquals("Prices Not Equal", productPrice, productDetailLowPrice);
         return this;
     }
-
-
 }

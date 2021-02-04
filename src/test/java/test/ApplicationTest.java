@@ -8,8 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class ApplicationTest extends BaseTest {
+
     HomePage homePage;
     LoginPage loginPage;
     ProductPage productPage;
@@ -25,17 +25,38 @@ public class ApplicationTest extends BaseTest {
 
     @Test
     public void test(){
+        homePage.CheckIfHomePageIsOpened()
+                .HoverToLogin()
+                .ClickLoginButton();
 
-        homePage.hoverToLogin().clickLoginButton();
-        loginPage.sendEmail().sendPassword().clickLogIn();
-        productPage.clickSearchField().fillSearchField()
-        .clickFindProduct().closePolicyAlert().clickSecondPage().clickRandomProduct().selectProductDetailPrice();
-        basketPage.addProductToBasket().goToBasket().increaseProductCountOne().deleteProductFromBasket();
+        loginPage.ClickEmailField()
+                .SendEmail()
+                .ClickPasswordField()
+                .SendPassword()
+                .ClickLogIn()
+                .CheckIfLoggedIn();
+
+        productPage.ClickSearchField()
+                .FillSearchField()
+                .ClickFindProduct()
+                .ClosePolicyAlert()
+                .ClickSecondPage()
+                .CheckPageOpened()
+                .ClickRandomProduct()
+                .SelectProductDetailPrice()
+                .ProductPriceCompare();
+
+        basketPage.AddProductToBasket()
+                .GoToBasket()
+                .IncreaseProductCountOne()
+                .IsBasketCountSizeTwoController()
+                .DeleteProductFromBasket()
+                .IsBasketEmptyController();
     }
 
     @After
     public void after(){
-        //getWebDriver().quit();
+        getWebDriver().quit();
     }
 
 }

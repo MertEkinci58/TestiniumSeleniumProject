@@ -13,6 +13,7 @@ public class BasePage {
 
     protected WebDriver driver = null;
     WebDriverWait wait = null;
+
     public BasePage(WebDriver driver){
         this.driver = driver;
         this.wait = new WebDriverWait(driver, 60);
@@ -26,6 +27,7 @@ public class BasePage {
     public void sendKeys(By by, String text){
         findElement(by).sendKeys(text);
     }
+
     public void click(By by){
         wait.until(ExpectedConditions.elementToBeClickable(by));
         findElement(by).click();
@@ -39,6 +41,10 @@ public class BasePage {
     public String getText(By by){
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
         return findElement(by).getText();
+    }
+
+    public String getCurrentPageUrl(){
+        return driver.getCurrentUrl();
     }
 
 }
