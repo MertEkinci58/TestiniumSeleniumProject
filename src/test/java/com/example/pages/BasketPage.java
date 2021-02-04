@@ -7,6 +7,7 @@ import org.junit.Assert;
 
 public class BasketPage extends BasePage {
     static final By ADD_TO_BASKET = By.id("add-to-basket");
+    static final By CLOSE_AD_WINDOW = By.xpath("/html/body/div[8]/div/img");
     static final By GO_TO_BASKET = By.xpath("//*[@id=\"header_wrapper\"]/div[4]/div[3]/div/div/div/div[2]/div[4]/div[1]/a");
     static final By INCREASE_PRODUCT_COUNT_ONE = By.xpath("//span[@class='plus icon-plus gg-icon gg-icon-plus']");
     static final By IS_BASKET_EMPTY = By.xpath("//*[@id=\"empty-cart-container\"]/div[1]/div[1]/div/div[2]/h2");
@@ -17,6 +18,10 @@ public class BasketPage extends BasePage {
 
     public BasketPage AddProductToBasket(){
         click(ADD_TO_BASKET);
+        return this;
+    }
+    public BasketPage CloseAdWindow(){
+        click(CLOSE_AD_WINDOW);
         return this;
     }
 
@@ -43,6 +48,7 @@ public class BasketPage extends BasePage {
     }
 
     public BasketPage IsBasketEmptyController(){
+        System.out.println(getText(IS_BASKET_EMPTY));
         Assert.assertEquals(
                 "Basket Is Empty Message Not Found",
                 "Sepetinizde ürün bulunmamaktadır.",

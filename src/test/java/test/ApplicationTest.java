@@ -46,7 +46,8 @@ public class ApplicationTest extends BaseTest {
                 .SelectProductDetailPrice()
                 .ProductPriceCompare();
 
-        basketPage.AddProductToBasket()
+        basketPage.CloseAdWindow()
+                .AddProductToBasket()
                 .GoToBasket()
                 .IncreaseProductCountOne()
                 .IsBasketCountSizeTwoController()
